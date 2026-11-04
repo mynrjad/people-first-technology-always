@@ -1,0 +1,223 @@
+```css
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --background: #090B10;
+    --surface: #131722;
+    --text: #F5F5F5;
+    --muted: #9299A8;
+    --accent: #8B9EFF;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--background);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+}
+
+.reveal {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.reveal .slides section {
+    text-align: left;
+    padding: 40px 7%;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal p {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.reveal h1 {
+    font-size: clamp(2.8rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.075em;
+}
+
+.reveal h2 {
+    font-size: clamp(2.4rem, 5.5vw, 5rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.065em;
+}
+
+.reveal h3 {
+    font-size: 1.4rem;
+}
+
+.reveal p {
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.reveal span,
+.accent {
+    color: var(--accent);
+}
+
+.eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 45px;
+}
+
+.subtitle {
+    max-width: 650px;
+    font-size: 1.3rem;
+    margin-top: 30px;
+}
+
+.description {
+    max-width: 650px;
+    font-size: 1.15rem;
+    margin-top: 35px;
+}
+
+.speaker {
+    position: absolute;
+    bottom: 35px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+}
+
+.hero,
+.closing {
+    background:
+        radial-gradient(circle at 80% 20%, #222d5540, transparent 40%);
+}
+
+.keyword-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 45px;
+}
+
+.keyword-row span {
+    border: 1px solid #343B4A;
+    padding: 12px 20px;
+    border-radius: 40px;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 45px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid #252B39;
+    border-radius: 18px;
+    padding: 25px;
+}
+
+.card h3 {
+    color: var(--accent);
+}
+
+.card p {
+    font-size: 0.9rem;
+}
+
+.workflow {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-top: 45px;
+}
+
+.workflow div {
+    flex: 1;
+    padding: 20px 12px;
+    background: var(--surface);
+    border-radius: 12px;
+    color: var(--accent);
+    font-size: 12px;
+}
+
+.workflow strong {
+    display: block;
+    color: white;
+    margin-top: 12px;
+    font-size: 15px;
+}
+
+button {
+    background: var(--accent);
+    border: none;
+    border-radius: 50px;
+    padding: 17px 28px;
+    color: #090B10;
+    font-weight: 800;
+    font-family: inherit;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: transform 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+}
+
+.challenge {
+    margin-top: 30px;
+    padding: 25px;
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    color: white;
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.hidden {
+    display: none;
+}
+
+.progress-bar {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+@media (max-width: 700px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow {
+        flex-wrap: wrap;
+    }
+
+    .workflow div {
+        flex: 1 1 40%;
+    }
+
+    .reveal .slides section {
+        padding: 25px;
+    }
+
+    .eyebrow {
+        margin-bottom: 25px;
+    }
+}
+```
