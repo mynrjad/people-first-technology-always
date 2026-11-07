@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>People First, Technology Always: the workshop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --forest:#2E4742; --deep:#10201D; --cream:#F2F2EB; --paper:#FAFAF5; --coral:#E97B77; --coral-ink:#B5443F;
+  --amber:#F5B726; --mint:#CFE0DB; --body:#3A4F4A; --muted:#52635F; --rule:#CBD3CC; --rule-dark:#4A6B64;
+  --display:'Barlow Semi Condensed','Arial Narrow',Arial,sans-serif; --text:Inter,Arial,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--cream);color:var(--deep);font:400 17px/1.55 var(--text)}
+::selection{background:var(--amber);color:var(--deep)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:4px}
+a{color:inherit;text-underline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1;margin:0;text-wrap:balance}
+p{margin:0}
+button{font:inherit;cursor:pointer}
+
+/* header */
+.top{background:var(--forest);color:var(--cream)}
+.top-inner{max-width:1180px;margin:0 auto;padding:28px 28px 36px}
+.brand{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;color:var(--mint);font-size:15px}
+.brand b{color:var(--cream);font-weight:600}
+.hero{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;padding:36px 0 0}
+.hero h1{font-size:clamp(40px,5.6vw,76px);letter-spacing:-.01em}
+.hero p{color:var(--mint);font-size:19px;max-width:46ch}
+.dots{display:grid;grid-template-columns:repeat(16,1fr);gap:5px;width:240px}
+.dots i{aspect-ratio:1;border-radius:50%;background:#3D5F58;transition:background .4s var(--ease)}
+.dots i.p{background:var(--coral)} .dots i.a{background:var(--amber)}
+nav.tabs{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--cream) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+nav.tabs ul{list-style:none;margin:0 auto;max-width:1180px;padding:12px 28px;display:flex;flex-wrap:wrap;gap:8px}
+nav.tabs a{display:flex;gap:8px;align-items:baseline;padding:8px 14px;border-radius:99px;text-decoration:none;color:var(--body);font-weight:500;font-size:15px;transition:background .2s,color .2s}
+nav.tabs a span{font-family:var(--display);font-size:17px;font-weight:700;color:var(--coral-ink)}
+nav.tabs a:hover:not([aria-current]){background:var(--paper);color:var(--deep)}
+nav.tabs a[aria-current="page"]{background:var(--deep);color:var(--cream)}
+nav.tabs a[aria-current="page"] span{color:var(--amber)}
+main{max-width:1180px;margin:0 auto;padding:48px 28px 96px;scroll-margin-top:40px}
+section.view{display:none}
+section.view.on{display:block;animation:in .35s var(--ease)}
+@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.head{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:start;margin-bottom:36px}
+.head h2{font-size:clamp(40px,5vw,64px)}
+.head p.lede{margin-top:16px;font-size:19px;color:var(--body);max-width:62ch}
+
+/* timer */
+.timer{display:flex;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--rule);border-radius:14px;padding:10px 12px 10px 18px}
+.timer output{font-family:var(--display);font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;min-width:4.2ch}
+.timer.done output{color:var(--coral-ink)}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:600;background:var(--deep);color:var(--cream);transition:transform .15s var(--ease),background .2s}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:transparent;color:var(--deep);box-shadow:inset 0 0 0 1.5px var(--deep)}
+.btn.amber{background:var(--amber);color:var(--deep)}
+.btn.small{padding:7px 12px;font-size:15px}
+
+/* facilitator note */
+details.note{margin-top:40px;border-top:1px solid var(--rule);padding-top:18px;color:var(--body)}
+details.note summary{cursor:pointer;font-weight:600;color:var(--deep)}
+details.note ul{margin:12px 0 0;padding-left:20px}
+details.note li{margin:6px 0}
+
+/* start view */
+.agenda{display:grid;gap:0;border-top:1px solid var(--rule)}
+.agenda a{display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--rule);text-decoration:none}
+.agenda a:hover h3{color:var(--coral-ink)}
+.agenda .min{font-family:var(--display);font-size:28px;font-weight:700;color:var(--forest)}
+.agenda h3{font-size:30px;transition:color .2s}
+.agenda p{color:var(--body);margin-top:6px}
+.agenda .go{color:var(--muted);font-size:15px}
+.setup{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px}
+.setup h3{font-size:24px;margin-bottom:8px}
+.setup p{color:var(--body)}
+
+/* activity 1: barriers */
+.lab{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:start}
+.stage{position:relative;background:var(--paper);border:1px solid var(--rule);border-radius:18px;padding:22px}
+.stage-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px;font-size:15px;color:var(--muted)}
+.seg{display:inline-flex;background:var(--cream);border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;border-radius:8px;padding:6px 12px;font-size:14px;font-weight:600;color:var(--body)}
+.seg button[aria-pressed="true"]{background:var(--deep);color:var(--cream)}
+.mock{background:#fff;border-radius:12px;padding:26px;transition:filter .4s var(--ease)}
+.mock.blur{filter:blur(2.2px)} .mock.gray{filter:grayscale(1)}
+.mock h4{margin:0 0 4px;font:700 26px/1.1 var(--display)}
+.mock .sub{color:#b9b9b9;font-size:14px;margin-bottom:16px}
+.hot{position:relative;border-radius:8px;cursor:pointer;outline:2px dashed transparent;outline-offset:3px;transition:outline-color .2s}
+.hunt .hot:hover{outline-color:#9fbdb5}
+.hot.found{outline:2px solid var(--coral)}
+.hot .pin{position:absolute;top:-10px;right:-10px;z-index:2;width:26px;height:26px;border-radius:50%;background:var(--coral);color:var(--deep);font:700 15px/26px var(--display);text-align:center;transform:scale(0);transition:transform .3s var(--ease)}
+.hot.found .pin{transform:scale(1)}
+.banner{height:110px;border-radius:10px;background:linear-gradient(135deg,#6FA055,#2E4742);display:grid;place-items:center;color:#ffffff99;font-size:13px;margin-bottom:16px}
+.field{margin-bottom:12px}
+.field input{width:100%;padding:12px;border:1px solid #e6e6e6;border-radius:8px;font:inherit;font-size:15px;background:#fff}
+.field input::placeholder{color:#c9c9c9}
+.row{display:flex;gap:10px;align-items:center;margin-top:10px}.row .hot{padding-right:14px}
+.go-icon{width:46px;height:46px;border-radius:10px;border:0;background:#E97B77;display:grid;place-items:center}
+.err{color:#e53927;font-size:13px;margin-top:6px}
+.fine{font-size:12px;color:#c4c4c4;margin-top:14px}
+/* fixed version */
+.fixed .sub{color:#52635F}
+.fixed .field label{display:block;font-weight:600;font-size:15px;margin-bottom:6px;color:var(--deep)}
+.fixed .field input{border-color:#8c9a95}
+.fixed .err{color:#B5443F;font-weight:600}
+.fixed .fine{color:#52635F;font-size:14px}
+.findings{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+.finding{padding:16px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:36px 1fr;gap:12px}
+.finding .n{width:28px;height:28px;border-radius:50%;background:var(--rule);font:700 15px/28px var(--display);text-align:center;color:var(--muted)}
+.finding.on .n{background:var(--coral);color:var(--deep)}
+.finding h3{font-size:22px}
+.finding p{color:var(--body);font-size:15.5px;margin-top:4px}
+.finding .stat{display:inline-block;margin-top:6px;font-size:14px;color:var(--forest);font-weight:600}
+.finding:not(.on) p,.finding:not(.on) .stat{display:none}
+.finding:not(.on) h3{color:var(--muted)}
+.progress{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.progress b{font:700 34px/1 var(--display)}
+.meter{flex:1;height:10px;background:var(--rule);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--coral);transition:width .5s var(--ease)}
+
+/* activity 2: issues */
+.issues{display:grid;grid-template-columns:280px 1fr;gap:40px}
+.picker{display:flex;flex-direction:column;gap:8px}
+.picker button{text-align:left;border:1px solid var(--rule);background:var(--paper);border-radius:12px;padding:14px 16px;color:var(--deep)}
+.picker button[aria-pressed="true"]{border-color:var(--deep);box-shadow:inset 0 0 0 1px var(--deep)}
+.picker code{font:600 15px/1.4 var(--text)}
+.picker small{display:block;color:var(--muted);margin-top:4px}
+.writer label{font-weight:600;display:block;margin-bottom:8px}
+.writer textarea{width:100%;min-height:150px;padding:16px;border:1.5px solid var(--rule);border-radius:12px;background:var(--paper);font:inherit;font-size:18px;line-height:1.5;resize:vertical;color:var(--deep)}
+.writer textarea:focus{border-color:var(--forest);outline:none;box-shadow:0 0 0 3px #CFE0DB}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;background:var(--paper);border:1px solid var(--rule);font-weight:600;font-size:15px;color:var(--muted);transition:all .25s var(--ease)}
+.chip svg{width:16px;height:16px}
+.chip.ok{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.hint{color:var(--body);font-size:15.5px;min-height:24px}
+.example{margin-top:18px;padding:18px;border-radius:12px;background:var(--forest);color:var(--cream);display:none}
+.example.on{display:block;animation:in .3s var(--ease)}
+.example p+p{margin-top:8px;color:var(--mint);font-size:15px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+/* activity 3: assistant */
+.assist{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:start}
+.toggles{display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.tg{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.tg b{display:block;font-size:17px}
+.tg span{color:var(--body);font-size:15px}
+.switch{position:relative;width:52px;height:30px}
+.switch input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.switch i{position:absolute;inset:0;border-radius:99px;background:var(--rule);transition:background .25s}
+.switch i::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #10201d40;transition:transform .25s var(--ease)}
+.switch input:checked+i{background:var(--forest)}
+.switch input:checked+i::after{transform:translateX(22px)}
+.switch input:focus-visible+i{outline:3px solid var(--amber);outline-offset:2px}
+.phone{background:var(--deep);border-radius:28px;padding:14px;box-shadow:0 20px 40px -20px #10201d80}
+.screen{background:var(--paper);border-radius:18px;overflow:hidden}
+.screen header{background:var(--forest);color:var(--cream);padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.screen header small{color:var(--mint);font-weight:400}
+.chat{padding:18px;display:flex;flex-direction:column;gap:12px;min-height:420px}
+.chat.big{font-size:20px}
+.msg{max-width:86%;padding:12px 14px;border-radius:16px;line-height:1.45}
+.msg.me{align-self:flex-end;background:var(--coral);color:var(--deep);border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:#E5E7DD;border-bottom-left-radius:4px}
+.msg.bot ol{margin:8px 0 0;padding-left:20px}
+.msg .src{display:block;margin-top:8px;font-size:.82em;color:var(--muted)}
+.qr{display:flex;flex-wrap:wrap;gap:8px}
+.qr span{border:1.5px solid var(--forest);color:var(--forest);border-radius:99px;padding:6px 12px;font-size:.85em;font-weight:600;background:var(--paper)}
+.score{display:flex;align-items:center;gap:16px;margin-top:20px}
+.score b{font:700 44px/1 var(--display)}
+.score p{color:var(--body)}
+
+/* activity 4: checklist */
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.cols h3{font-size:30px;padding-bottom:12px;border-bottom:3px solid var(--forest);margin-bottom:6px}
+.check{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--rule);cursor:pointer;align-items:start}
+.check input{appearance:none;width:24px;height:24px;border:2px solid var(--deep);border-radius:6px;margin:1px 0 0;display:grid;place-items:center;cursor:pointer;transition:background .2s}
+.check input:checked{background:var(--forest);border-color:var(--forest)}
+.check input:checked::after{content:"";width:6px;height:12px;border:solid var(--cream);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.check span{font-size:17px}
+.check input:checked+span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule-dark)}
+.done-bar{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:32px;padding:20px 24px;background:var(--forest);color:var(--cream);border-radius:16px}
+.done-bar b{font:700 30px/1 var(--display)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;background:var(--deep);color:var(--cream);padding:12px 18px;border-radius:12px;font-weight:600;transition:all .3s var(--ease);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* activity 4: prompting */
+.prompt-lab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.task{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.task button{border:1px solid var(--rule);background:var(--paper);border-radius:99px;padding:8px 14px;font-size:15px;font-weight:600;color:var(--body)}
+.task button[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:var(--cream)}
+.lazy{padding:16px 18px;border-radius:12px;background:var(--paper);border:1px dashed var(--rule-dark);margin-bottom:20px}
+.lazy small,.writer small{display:block;color:var(--muted);font-size:14px;margin-bottom:4px}
+.lazy code{font:500 17px/1.5 var(--text)}
+.runs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.out{border-radius:14px;padding:18px;min-height:150px;background:var(--paper);border:1px solid var(--rule);display:flex;flex-direction:column;gap:10px}
+.out.mine{background:var(--forest);border-color:var(--forest);color:var(--cream)}
+.out h3{font-size:22px}
+.out .txt{white-space:pre-wrap;font-size:15.5px;line-height:1.55}
+.out.mine .txt{color:var(--cream)}
+.out .tag{font-size:13px;color:var(--muted)}
+.out.mine .tag{color:var(--mint)}
+.out .txt:empty::before{content:attr(data-empty);color:var(--muted)}
+.out.mine .txt:empty::before{color:var(--mint)}
+.rubric{margin-top:20px;border-top:1px solid var(--rule)}
+.rubric .rq{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--rule)}
+.rq .seg button{min-width:72px}
+.ai-off{display:none;margin-top:12px;font-size:14px;color:var(--muted)}
+.ai-off.on{display:block}
+/* wrap */
+.prompts{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;border-top:1px solid var(--rule);padding-top:28px}
+.prompts h3{font-size:28px;margin-bottom:10px}
+.prompts p{color:var(--body)}
+.sources{margin-top:56px}
+.sources h3{font-size:28px;margin-bottom:12px}
+.sources li{margin:8px 0;color:var(--body)}
+footer{background:var(--forest);color:var(--mint);font-size:15px}
+footer div{max-width:1180px;margin:0 auto;padding:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:1040px){
+  .lab,.assist,.issues,.prompt-lab{grid-template-columns:1fr}
+  .picker{flex-direction:row;flex-wrap:wrap}.picker button{flex:1 1 200px}
+  .runs{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}.dots{display:none}
+  .head{grid-template-columns:1fr}
+  .prompts,.setup{grid-template-columns:1fr}
+  .agenda a{grid-template-columns:80px 1fr}.agenda .go{display:none}
+  main{padding-top:32px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand"><span><b>People First, Technology Always</b> workshop with Jia, UI/UX Design Manager, Virtual Studios</span><span>Hacktoberfest 2026</span></div>
+    <div class="hero">
+      <div>
+        <h1>Design for the person, then build.</h1>
+        <p style="margin-top:16px">Four hands-on exercises from the talk, including prompting AI with people in mind. Work in pairs, one screen between you, about an hour in total.</p>
+      </div>
+      <div class="dots" id="dots" aria-hidden="true"></div>
+    </div>
+  </div>
+</header>
+<nav class="tabs" aria-label="Workshop activities"><ul>
+  <li><a href="#start"><span>0</span>Start</a></li>
+  <li><a href="#barriers"><span>1</span>Spot the barriers</a></li>
+  <li><a href="#issue"><span>2</span>Name the person</a></li>
+  <li><a href="#assistant"><span>3</span>Fix Lola’s assistant</a></li>
+  <li><a href="#prompt"><span>4</span>Prompt for people</a></li>
+  <li><a href="#wrap"><span>5</span>Wrap up</a></li>
+</ul></nav>
+
+<main>
+<!-- START -->
+<section class="view" id="v-start" aria-labelledby="h-start">
+  <div class="head"><div>
+    <h2 id="h-start">How the hour runs</h2>
+    <p class="lede">Each exercise has a timer for the facilitator and a short debrief. Nothing you type leaves this page.</p>
+  </div></div>
+  <div class="agenda">
+    <a href="#barriers"><span class="min">15 min</span><div><h3>Spot the barriers</h3><p>Find six accessibility failures in a sign-up form, then see what it feels like with blurred vision or no colour.</p></div><span class="go">Open</span></a>
+    <a href="#issue"><span class="min">10 min</span><div><h3>Name the person</h3><p>Rewrite vague tickets so they say who is stuck, what they’re trying to do and what’s in the way.</p></div><span class="go">Open</span></a>
+    <a href="#assistant"><span class="min">10 min</span><div><h3>Fix Lola’s assistant</h3><p>Redesign an AI chatbot reply for a 68-year-old renewing her ID, one design decision at a time.</p></div><span class="go">Open</span></a>
+    <a href="#prompt"><span class="min">15 min</span><div><h3>Prompt for people</h3><p>Write an AI prompt that starts from the person, run it next to a lazy prompt, and judge both answers the way a user would.</p></div><span class="go">Open</span></a>
+    <a href="#wrap"><span class="min">10 min</span><div><h3>Wrap up</h3><p>Three questions to take home, plus every source quoted in the talk.</p></div><span class="go">Open</span></a>
+  </div>
+  <div class="setup">
+    <div><h3>Pairs, not solo</h3><p>One person drives, one person narrates what a real user would think. Swap at every exercise.</p></div>
+    <div><h3>Bring one real thing</h3><p>An open issue, a screen or a feature from a project you contribute to. Exercises 2 and 4 work best with it.</p></div>
+    <div><h3>No wrong answers</h3><p>The goal is noticing people, not scoring points. Disagreements make the best debriefs.</p></div>
+  </div>
+</section>
+
+<!-- 1 BARRIERS -->
+<section class="view" id="v-barriers" aria-labelledby="h-barriers">
+  <div class="head"><div>
+    <h2 id="h-barriers">Spot the barriers</h2>
+    <p class="lede">This sign-up form has six accessibility failures, the same kinds WebAIM finds on most of the web’s top home pages. Click anything you think would stop someone.</p>
+  </div><div class="timer" data-min="15"></div></div>
+  <div class="lab">
+    <div class="stage">
+      <div class="stage-bar">
+        <div class="seg" role="group" aria-label="Version">
+          <button aria-pressed="true" data-ver="broken">As built</button>
+          <button aria-pressed="false" data-ver="fixed">Fixed</button>
+        </div>
+        <div class="seg" role="group" aria-label="See it as">
+          <button aria-pressed="true" data-sim="">Typical vision</button>
+          <button aria-pressed="false" data-sim="blur">Low vision</button>
+          <button aria-pressed="false" data-sim="gray">No colour</button>
+        </div>
+      </div>
+      <div class="mock hunt" id="mock">
+        <div class="hot" data-f="1"><h4>Join your local fest</h4><p class="sub">Free for everyone. Sign up in under a minute.</p><b class="pin">1</b></div>
+        <div class="hot banner" data-f="2" role="img" aria-label="Photo placeholder">[ image: people coding together ]<b class="pin">2</b></div>
+        <div class="hot field" data-f="3"><label class="lbl" hidden>Email address</label><input type="text" placeholder="Email" tabindex="-1"><b class="pin">3</b></div>
+        <div class="field"><label class="lbl" hidden>GitHub username</label><input type="text" placeholder="GitHub username" tabindex="-1" value="jia-dev"><div class="hot err" data-f="4">This username is already taken<b class="pin">4</b></div></div>
+        <div class="row"><div class="hot" data-f="5"><button class="go-icon" tabindex="-1" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10h11m-4-5 5 5-5 5" stroke="#10201D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button><b class="pin">5</b></div><span class="btn-text" hidden>Sign up</span></div>
+        <p class="hot fine" data-f="6">By joining you agree to the terms. <u>Click here</u> to read them.<b class="pin">6</b></p>
+      </div>
+    </div>
+    <div>
+      <div class="progress"><b id="found-n">0 of 6</b><div class="meter"><i id="found-bar"></i></div></div>
+      <div class="findings" id="findings">
+        <div class="finding" data-f="1"><span class="n">1</span><div><h3>Low-contrast text</h3><p>The light grey subtitle fails WCAG contrast. Aim for at least 4.5:1 for body text.</p><span class="stat">Found on 83.9% of top home pages</span></div></div>
+        <div class="finding" data-f="2"><span class="n">2</span><div><h3>Image with no text alternative</h3><p>A screen reader announces nothing useful. Describe what the image shows, or mark it decorative.</p><span class="stat">Found on 53.1% of top home pages</span></div></div>
+        <div class="finding" data-f="3"><span class="n">3</span><div><h3>Placeholder instead of a label</h3><p>The hint vanishes as you type and many screen readers skip it. Give every field a visible label.</p><span class="stat">Missing labels: 51% of top home pages</span></div></div>
+        <div class="finding" data-f="4"><span class="n">4</span><div><h3>Error shown by colour alone, with no way out</h3><p>Red text is easy to miss and says nothing about how to fix it. Say what happened and suggest a next step.</p><span class="stat">Plain-language errors cost nothing to write</span></div></div>
+        <div class="finding" data-f="5"><span class="n">5</span><div><h3>Button with no name</h3><p>An arrow icon means nothing to a screen reader. Use a visible text label like “Sign up”.</p><span class="stat">Empty buttons: 30.6% of top home pages</span></div></div>
+        <div class="finding" data-f="6"><span class="n">6</span><div><h3>“Click here” and tiny print</h3><p>Link text should say where it goes, and the terms deserve readable type.</p><span class="stat">Empty or vague links: 46.3% are empty</span></div></div>
+      </div>
+      <div class="actions"><button class="btn ghost small" id="reveal-all">Show all six</button><button class="btn ghost small" id="reset-hunt">Start again</button></div>
+    </div>
+  </div>
+  <details class="note"><summary>Facilitator notes</summary><ul>
+    <li>Give pairs 8 minutes to hunt before anyone presses “Show all six”.</li>
+    <li>Switch to “Low vision”, then “No colour”, and ask which failures got worse. Usually 1, 4 and 6.</li>
+    <li>Flip to “Fixed” and ask: which fix took the longest? Almost all of them are minutes of design work.</li>
+    <li>Figures from WebAIM, The WebAIM Million (2026): 95.9% of the top million home pages had detectable WCAG 2 failures.</li>
+  </ul></details>
+</section>
+
+<!-- 2 ISSUE -->
+<section class="view" id="v-issue" aria-labelledby="h-issue">
+  <div class="head"><div>
+    <h2 id="h-issue">Name the person in the issue</h2>
+    <p class="lede">A good ticket says who is stuck, what they’re trying to do, and what gets in their way. Pick a vague issue, or paste one of yours, and rewrite it.</p>
+  </div><div class="timer" data-min="10"></div></div>
+  <div class="issues">
+    <div class="picker" role="group" aria-label="Vague issues">
+      <button aria-pressed="true" data-i="0"><code>Improve README</code><small>docs</small></button>
+      <button aria-pressed="false" data-i="1"><code>Fix onboarding UX</code><small>app</small></button>
+      <button aria-pressed="false" data-i="2"><code>Make AI search better</code><small>feature</small></button>
+      <button aria-pressed="false" data-i="3"><code>Your own issue</code><small>paste it below</small></button>
+    </div>
+    <div class="writer">
+      <label for="rewrite" id="rewrite-label">Rewrite “Improve README”</label>
+      <textarea id="rewrite" placeholder="Start with the person: “A first-time contributor…”"></textarea>
+      <div class="chips" aria-live="polite">
+        <span class="chip" id="c-who"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 14c.8-3 3-4.5 5.5-4.5S12.7 11 13.5 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Who</span>
+        <span class="chip" id="c-goal"><svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>Trying to</span>
+        <span class="chip" id="c-block"><svg viewBox="0 0 16 16" fill="none"><rect x="2" y="6" width="12" height="4" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M5 6v4M11 6v4" stroke="currentColor" stroke-width="1.6"/></svg>What’s in the way</span>
+      </div>
+      <p class="hint" id="hint">Start with a person, not a part of the product.</p>
+      <div class="actions"><button class="btn small" id="copy-issue">Copy rewrite</button><button class="btn ghost small" id="show-example">Show an example</button></div>
+      <div class="example" id="example"></div>
+    </div>
+  </div>
+  <details class="note"><summary>Facilitator notes</summary><ul>
+    <li>The chips are a nudge, not a grade. They look for words like “contributor”, “trying to” and “can’t”.</li>
+    <li>Ask two pairs to read their rewrites aloud. Which one would you pick up first, and why?</li>
+    <li>Link back to the talk: people are easier to design for than tickets.</li>
+  </ul></details>
+</section>
+
+<!-- 3 ASSISTANT -->
+<section class="view" id="v-assistant" aria-labelledby="h-assistant">
+  <div class="head"><div>
+    <h2 id="h-assistant">Fix Lola’s assistant</h2>
+    <p class="lede">Lola is 68 and wants to renew her ID. The model behind this chatbot is fine; the reply design isn’t. Turn on one decision at a time and watch her experience change.</p>
+  </div><div class="timer" data-min="10"></div></div>
+  <div class="assist">
+    <div>
+      <div class="toggles" id="toggles">
+        <label class="tg"><div><b>Use plain language</b><span>Drop the form codes and jargon.</span></div><span class="switch"><input type="checkbox" data-t="plain"><i></i></span></label>
+        <label class="tg"><div><b>Ask one clarifying question</b><span>Renewing in person or online?</span></div><span class="switch"><input type="checkbox" data-t="ask"><i></i></span></label>
+        <label class="tg"><div><b>Show the steps</b><span>Short, numbered, one action each.</span></div><span class="switch"><input type="checkbox" data-t="steps"><i></i></span></label>
+        <label class="tg"><div><b>Say where it came from</b><span>Explain what the answer is based on.</span></div><span class="switch"><input type="checkbox" data-t="source"><i></i></span></label>
+        <label class="tg"><div><b>Offer a human</b><span>Keep a person in control of the outcome.</span></div><span class="switch"><input type="checkbox" data-t="human"><i></i></span></label>
+        <label class="tg"><div><b>Larger text</b><span>Design for the least served.</span></div><span class="switch"><input type="checkbox" data-t="big"><i></i></span></label>
+      </div>
+      <div class="score"><b id="score">0/6</b><p id="score-text">Lola closes the app and calls her grandson.</p></div>
+    </div>
+    <div class="phone" aria-label="Chat preview">
+      <div class="screen">
+        <header><span>Help assistant</span><small>AI-powered</small></header>
+        <div class="chat" id="chat" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+  <details class="note"><summary>Facilitator notes</summary><ul>
+    <li>Have pairs predict which single toggle helps Lola most before trying it. Most groups pick plain language; many end up arguing for “Offer a human”.</li>
+    <li>Tie to the evidence: in the 2025 Stack Overflow survey, 46% of developers distrusted AI accuracy and only 33% trusted it. Showing sources and a way out is how interfaces earn trust.</li>
+    <li>Stretch: which toggle would you ship first if you only had one sprint?</li>
+  </ul></details>
+</section>
+
+<!-- 4 PROMPT -->
+<section class="view" id="v-prompt" aria-labelledby="h-prompt">
+  <div class="head"><div>
+    <h2 id="h-prompt">Prompt for people</h2>
+    <p class="lede">AI writes a lot of interface copy now. A lazy prompt gets a generic answer; a prompt that names the person gets one they can use. Pick a task, write your prompt, then run it next to the lazy one.</p>
+  </div><div class="timer" data-min="15"></div></div>
+  <div class="task" role="group" aria-label="Task" id="tasks"></div>
+  <div class="prompt-lab">
+    <div>
+      <div class="lazy"><small>The lazy prompt</small><code id="lazy"></code></div>
+      <div class="writer">
+        <label for="mine">Your people-first prompt</label>
+        <textarea id="mine" placeholder="Start with who will read this, where they are, and what they need to do next."></textarea>
+        <div class="chips" aria-live="polite">
+          <span class="chip" id="p-who">Who it’s for</span>
+          <span class="chip" id="p-ctx">Their situation</span>
+          <span class="chip" id="p-goal">What they need to do</span>
+          <span class="chip" id="p-rules">Plain, short, honest</span>
+        </div>
+        <p class="hint" id="p-hint">Name the person first. The AI can’t guess who’s on the other side of the screen.</p>
+        <div class="actions"><button class="btn amber" id="run">Run both prompts</button><button class="btn ghost small" id="p-example">Show an example prompt</button><button class="btn ghost small" id="p-copy">Copy my prompt</button></div>
+        <p class="ai-off" id="ai-off">AI isn’t available in this view, so the answers are written examples, not live AI output. Open the workshop on claude.ai to run your own prompts.</p>
+      </div>
+    </div>
+    <div>
+      <div class="runs">
+        <div class="out"><h3>Lazy prompt</h3><span class="tag" id="tag-a">Not run yet</span><div class="txt" id="out-a" data-empty="The answer appears here."></div></div>
+        <div class="out mine"><h3>Your prompt</h3><span class="tag" id="tag-b">Not run yet</span><div class="txt" id="out-b" data-empty="The answer appears here."></div></div>
+      </div>
+      <div class="rubric" id="rubric">
+        <div class="rq"><span>Which answer could the person act on straight away?</span><div class="seg" role="group"><button aria-pressed="false">Lazy</button><button aria-pressed="false">Mine</button></div></div>
+        <div class="rq"><span>Which says what to do if something goes wrong?</span><div class="seg" role="group"><button aria-pressed="false">Lazy</button><button aria-pressed="false">Mine</button></div></div>
+        <div class="rq"><span>Which makes sense read aloud by a screen reader?</span><div class="seg" role="group"><button aria-pressed="false">Lazy</button><button aria-pressed="false">Mine</button></div></div>
+        <div class="rq"><span>Which one invented something it couldn’t know?</span><div class="seg" role="group"><button aria-pressed="false">Lazy</button><button aria-pressed="false">Mine</button></div></div>
+      </div>
+    </div>
+  </div>
+  <details class="note"><summary>Facilitator notes</summary><ul>
+    <li>Pairs spend 5 minutes writing, 5 running and judging, 5 sharing. Ask one pair to read both answers aloud.</li>
+    <li>The last rubric question matters most: AI fills gaps with confident guesses. Good prompts tell it what it doesn’t know and ask it to say so.</li>
+    <li>Tie to the evidence: in the 2025 Stack Overflow survey, 66% of developers said their top AI frustration is answers that are “almost right, but not quite”.</li>
+    <li>Each run uses the viewer’s own Claude account and asks their permission the first time. Where AI isn’t available, the page shows written examples and says so.</li>
+  </ul></details>
+</section>
+
+<!-- 5 WRAP -->
+<section class="view" id="v-wrap" aria-labelledby="h-wrap">
+  <div class="head"><div>
+    <h2 id="h-wrap">Take it home</h2>
+    <p class="lede">Ten minutes. Each person answers one question out loud, then writes one commitment on a sticky note.</p>
+  </div><div class="timer" data-min="10"></div></div>
+  <div class="prompts">
+    <div><h3>Who did you forget?</h3><p>Think of the last thing you shipped. Who would have struggled with it, and how would you have found out?</p></div>
+    <div><h3>Where does AI help, and where does it stop?</h3><p>Name one task you’ll hand to AI this month, and one decision you’ll keep for people.</p></div>
+    <div><h3>What will you change on Monday?</h3><p>One habit, one prompt template, one question in code review. Small and specific beats ambitious.</p></div>
+  </div>
+  <div class="sources">
+    <h3>Every source from the talk</h3>
+    <ul>
+      <li>World Health Organization, <a href="https://www.who.int/news-room/fact-sheets/detail/disability-and-health">Disability fact sheet</a> (2023): about 1.3 billion people, 1 in 6, experience significant disability.</li>
+      <li>ITU, <a href="https://www.itu.int/itu-d/reports/statistics/facts-figures-2025/">Facts and Figures 2025</a>: 2.2 billion people remain offline.</li>
+      <li>WebAIM, <a href="https://webaim.org/projects/million/">The WebAIM Million</a> (2026): 95.9% of the top million home pages had detectable WCAG 2 failures.</li>
+      <li>Baymard Institute, <a href="https://baymard.com/lists/cart-abandonment-rate">cart abandonment research</a>: 17% of US shoppers who abandoned a cart blamed a long or complicated checkout.</li>
+      <li>Pew Research Center, <a href="https://www.pewresearch.org/short-reads/2025/06/25/34-of-us-adults-have-used-chatgpt-about-double-the-share-in-2023/">34% of U.S. adults have used ChatGPT</a> (2025).</li>
+      <li>Stack Overflow, <a href="https://survey.stackoverflow.co/2025/ai">2025 Developer Survey: AI</a>: 84% use or plan to use AI tools; 46% distrust their accuracy.</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer><div><span>People First, Technology Always. Build for people. Build with technology. Always in that order.</span><span>linkedin.com/in/mynrjad</span></div></footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const store={get(k,d){try{const v=localStorage.getItem('pfta-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('pfta-'+k,JSON.stringify(v))}catch(e){}}};
+const toast=(t)=>{const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>el.classList.remove('on'),2200)};
+async function copy(text,label){try{await navigator.clipboard.writeText(text);toast(label)}catch(e){toast('Copy was blocked. Select the text and copy it by hand.')}}
+
+/* hero dots: a person in the grid */
+(function(){const g=$('#dots'),C=16,R=14,hx=7.5,hy=4,hr=2.6;let h='';
+ for(let y=0;y<R;y++)for(let x=0;x<C;x++){const head=(x-hx)**2+(y-hy)**2<=hr*hr,body=((x-hx)/5.6)**2+((y-14.2)/5.4)**2<=1&&y>=8;
+ const a=[[1,1],[14,2],[1,9],[14,11],[12,0]].some(([ax,ay])=>ax===x&&ay===y);h+=`<i class="${head||body?'p':a?'a':''}"></i>`}g.innerHTML=h})();
+
+/* routing */
+const views=['start','barriers','issue','assistant','prompt','wrap'];
+function route(){const id=(location.hash||'#start').slice(1);const v=views.includes(id)?id:'start';
+ $$('section.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+v));
+ $$('nav.tabs a').forEach(a=>{if(a.getAttribute('href')==='#'+v)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+ if(location.hash&&views.includes(id)){const m=$('main');if(m.getBoundingClientRect().top<0)m.scrollIntoView({block:'start'})}}
+addEventListener('hashchange',route);route();
+
+/* timers */
+$$('.timer').forEach(t=>{const total=+t.dataset.min*60;let left=total,iv=null;
+ t.innerHTML=`<output aria-live="off">${fmt(left)}</output><button class="btn small" data-a="go">Start</button><button class="btn ghost small" data-a="reset" aria-label="Reset timer">Reset</button>`;
+ const out=$('output',t),go=$('[data-a=go]',t);
+ function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+ function tick(){left--;out.textContent=fmt(Math.max(left,0));if(left<=0){clearInterval(iv);iv=null;go.textContent='Start';t.classList.add('done');out.textContent='Time';}}
+ go.onclick=()=>{if(iv){clearInterval(iv);iv=null;go.textContent='Resume'}else{if(left<=0){left=total;t.classList.remove('done')}iv=setInterval(tick,1000);go.textContent='Pause'}};
+ $('[data-a=reset]',t).onclick=()=>{clearInterval(iv);iv=null;left=total;out.textContent=fmt(left);go.textContent='Start';t.classList.remove('done')};});
+
+/* 1. barriers */
+const mock=$('#mock');let found=new Set(store.get('found',[]));
+function paintFound(){$$('.hot',mock).forEach(h=>h.classList.toggle('found',found.has(h.dataset.f)&&mock.classList.contains('hunt')));
+ $$('.finding').forEach(f=>f.classList.toggle('on',found.has(f.dataset.f)));
+ $('#found-n').textContent=`${found.size} of 6`;$('#found-bar').style.width=(found.size/6*100)+'%';store.set('found',[...found]);
+ if(found.size===6&&!paintFound.cheered){paintFound.cheered=true;toast('All six found. Now try “Low vision”.')}}
+$$('.hot',mock).forEach(h=>{h.tabIndex=0;h.setAttribute('role','button');h.setAttribute('aria-label','Mark as a barrier');
+ const hit=()=>{if(!mock.classList.contains('hunt'))return;found.add(h.dataset.f);paintFound();$(`.finding[data-f="${h.dataset.f}"]`).scrollIntoView({block:'nearest',behavior:'smooth'})};
+ h.addEventListener('click',hit);h.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();hit()}})});
+$('#reveal-all').onclick=()=>{['1','2','3','4','5','6'].forEach(f=>found.add(f));paintFound()};
+$('#reset-hunt').onclick=()=>{found.clear();paintFound.cheered=false;paintFound()};
+$$('[data-ver]').forEach(b=>b.onclick=()=>{$$('[data-ver]').forEach(x=>x.setAttribute('aria-pressed',x===b));const fixed=b.dataset.ver==='fixed';
+ mock.classList.toggle('fixed',fixed);mock.classList.toggle('hunt',!fixed);
+ $$('.lbl',mock).forEach(l=>l.hidden=!fixed);
+ const sub=$('.sub',mock);sub.textContent=fixed?'Free for everyone. Sign up in under a minute.':'Free for everyone. Sign up in under a minute.';
+ const ban=$('.banner',mock);ban.firstChild.textContent=fixed?'Alt text: “Six contributors pair-programming at a Hacktoberfest meetup”':'[ image: people coding together ]';
+ const err=$('.err',mock);err.firstChild.textContent=fixed?'Error: “jia-dev” is taken. Try “jia-dev-26” or add your city.':'This username is already taken';
+ const btn=$('.go-icon',mock),txt=$('.btn-text',mock);btn.hidden=fixed;txt.hidden=!fixed;txt.className=fixed?'btn-text btn':'btn-text';
+ $('.fine',mock).firstChild.textContent=fixed?'By joining you agree to the ':'By joining you agree to the terms. ';
+ $('.fine u',mock).textContent=fixed?'Hacktoberfest participation terms':'Click here';
+ paintFound()});
+$$('[data-sim]').forEach(b=>b.onclick=()=>{$$('[data-sim]').forEach(x=>x.setAttribute('aria-pressed',x===b));mock.classList.remove('blur','gray');if(b.dataset.sim)mock.classList.add(b.dataset.sim)});
+paintFound();
+
+/* 2. issues */
+const issues=[
+ {t:'Improve README',ex:'A first-time contributor trying to run the project locally can’t find the setup steps, because they’re split across the README and a wiki page.',why:'Names a specific person, their goal and the actual blocker, so anyone can pick it up.'},
+ {t:'Fix onboarding UX',ex:'A new user on a phone is trying to create their first project but gets stuck on step 3, where the “Next” button is hidden below the keyboard.',why:'Points at one screen and one moment, which turns a vague redesign into a fixable bug.'},
+ {t:'Make AI search better',ex:'A support agent trying to answer a refund question can’t tell which policy the AI summary is based on, so they re-check every answer by hand.',why:'Frames the AI problem as a trust problem a designer and developer can solve together.'},
+ {t:'Your own issue',ex:'A [who] trying to [goal] can’t [blocker], because [cause].',why:'Fill in the brackets with your own issue. If you can’t name the who, that’s your first research question.'}];
+let cur=0;const drafts=store.get('drafts',{});
+const ta=$('#rewrite');
+function pick(i){cur=i;$$('.picker button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.i===i));
+ $('#rewrite-label').textContent=i===3?'Paste your issue, then rewrite it':`Rewrite “${issues[i].t}”`;ta.value=drafts[i]||'';$('#example').classList.remove('on');check()}
+function check(){const v=ta.value.toLowerCase();
+ const who=/\b(a|an|the|every|some)\s+(new|first[- ]time|returning|blind|older|busy|mobile|non-native|junior|senior)?\s*(user|contributor|maintainer|person|people|developer|designer|customer|student|parent|agent|shopper|reader|visitor|volunteer|someone)s?\b|\bsomeone\b|\bpeople\b/.test(v);
+ const goal=/\b(trying to|wants? to|needs? to|tries to|so they can|in order to|attempting to|hoping to)\b/.test(v);
+ const block=/\b(can[’']?t|cannot|can not|doesn[’']?t|don[’']?t|unable|fails?|stuck|confus|hidden|missing|lost|blocked|gives? up|abandon)/.test(v);
+ $('#c-who').classList.toggle('ok',who);$('#c-goal').classList.toggle('ok',goal);$('#c-block').classList.toggle('ok',block);
+ const hint=!v.trim()?'Start with a person, not a part of the product.':!who?'Who is this for? Name the person, like “a first-time contributor”.':!goal?'What are they trying to do? Add “trying to…”.':!block?'What stops them? Add what they can’t do.':'That’s a ticket someone can pick up. Read it aloud to your partner.';
+ $('#hint').textContent=hint;drafts[cur]=ta.value;store.set('drafts',drafts)}
+$$('.picker button').forEach(b=>b.onclick=()=>pick(+b.dataset.i));
+ta.addEventListener('input',check);
+$('#show-example').onclick=()=>{const e=$('#example');e.innerHTML=`<p>${issues[cur].ex}</p><p>${issues[cur].why}</p>`;e.classList.toggle('on')};
+$('#copy-issue').onclick=()=>ta.value.trim()?copy(ta.value.trim(),'Rewrite copied'):toast('Write a rewrite first');
+pick(0);
+
+/* 3. assistant */
+const state=store.get('assist',{});
+$$('#toggles input').forEach(i=>{i.checked=!!state[i.dataset.t];i.addEventListener('change',()=>{state[i.dataset.t]=i.checked;store.set('assist',state);renderChat()})});
+function renderChat(){const s=state,n=['plain','ask','steps','source','human','big'].filter(k=>s[k]).length;
+ let reply;
+ if(s.ask&&!s.steps){reply=s.plain?'Happy to help you renew your ID. Would you like to do it online, or in person at an office?':'Please specify renewal channel: ONLINE or IN-PERSON (ref. RQ-221-B).'}
+ else{
+  let intro=s.plain?'You can renew your ID online in about 15 minutes.':'Please restate your query using the official form code (e.g. RQ-221-B) and a valid reference number.';
+  if(s.ask&&s.plain)intro='Great, online it is. You can renew your ID in about 15 minutes.';
+  let steps='';if(s.steps)steps=s.plain?'<ol><li>Have your current ID and a recent photo ready.</li><li>Open the renewal page and sign in.</li><li>Upload your photo and check your details.</li><li>Pay the fee. Your new ID arrives by post.</li></ol>':'<ol><li>Obtain form RQ-221-B.</li><li>Complete fields 1 to 14.</li><li>Submit with ref. no.</li></ol>';
+  reply=intro+steps}
+ const src=s.source?`<span class="src">Based on the official renewal guide, updated this year. You can check every step there.</span>`:'';
+ const qr=[];if(s.ask&&!s.steps)qr.push('Online','In person');if(s.human)qr.push('Talk to a person');if(s.steps)qr.push('That didn’t work');
+ $('#chat').classList.toggle('big',!!s.big);
+ $('#chat').innerHTML=`<div class="msg me">How do I renew my ID?</div><div class="msg bot">${reply}${src}</div>${qr.length?`<div class="qr">${qr.map(q=>`<span>${q}</span>`).join('')}</div>`:''}`;
+ $('#score').textContent=n+'/6';
+ $('#score-text').textContent=['Lola closes the app and calls her grandson.','Lola tries once more, then gives up.','Lola gets part of the way there.','Lola can follow it, if nothing goes wrong.','Lola renews her ID and trusts the answer.','Lola renews her ID, and tells her friends about it.','Lola renews her ID, and tells her friends about it.'][n];}
+renderChat();
+
+/* 4. prompting */
+const tasks=[
+ {label:'Username-taken error',lazy:'Write an error message for when a username is taken.',
+  ex:'Write the error message shown when someone signs up for a local Hacktoberfest event and the GitHub username they typed is already registered. Many are first-time contributors on a phone, and some use screen readers. Say what happened and give one or two ways to fix it. Plain English, under 25 words, no blame, no jargon. Don’t invent policies.',
+  a:'Error: Username already exists. Please choose a different username.',
+  b:'That GitHub username is already signed up. If it’s yours, sign in instead. If not, check the spelling or try a different one.'},
+ {label:'Lola’s ID renewal reply',lazy:'Explain how to renew an ID.',
+  ex:'A 68-year-old woman on her phone asks a government help chatbot “How do I renew my ID?”. She isn’t confident with technology. Write the chatbot’s first reply: one short sentence, then up to four numbered steps, in plain words. Offer a way to talk to a person. If a step depends on her country or rules you don’t know, say so instead of guessing.',
+  a:'To renew an ID, submit a renewal application with the required documents and fee to the issuing authority, either online or in person, and follow any additional procedures specified by your jurisdiction.',
+  b:'You can renew your ID online or at an office.\n1. Have your current ID ready.\n2. Choose online or in person.\n3. Follow the steps on the official renewal page.\nThe exact rules depend on where you live, so check that page. Would you like to talk to a person instead?'},
+ {label:'Alt text for an event photo',lazy:'Write alt text for a photo of a hackathon.',
+  ex:'Write alt text for a photo on a community event page: about 20 people at a Hacktoberfest meetup, laptops open on long tables, two people pair-programming in front, a projector showing a pull request. A screen-reader user is deciding whether this event feels welcoming for beginners. One sentence, under 25 words. Describe only what’s in the photo.',
+  a:'Image of a hackathon event with people using computers.',
+  b:'About 20 people at long tables with laptops, two pair-programming up front, a pull request projected on the wall behind them.'}];
+let tk=0;const pdraft=store.get('pdraft',{});const mineTa=$('#mine');
+$('#tasks').innerHTML=tasks.map((t,i)=>`<button aria-pressed="${i===0}" data-i="${i}">${t.label}</button>`).join('');
+function clearRuns(){['a','b'].forEach(x=>{$('#out-'+x).textContent='';$('#tag-'+x).textContent='Not run yet'});$$('#rubric button').forEach(b=>b.setAttribute('aria-pressed','false'))}
+function setTask(i){tk=i;$$('#tasks button').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===i)));$('#lazy').textContent=tasks[i].lazy;mineTa.value=pdraft[i]||'';clearRuns();pcheck()}
+function pcheck(){const v=mineTa.value.toLowerCase();
+ const who=/\b(user|person|people|someone|contributor|customer|woman|man|student|reader|visitor|beginner|first[- ]time|older|\d+[- ]year[- ]old|screen[- ]reader)/.test(v);
+ const ctx=/(on (a|her|his|their) phone|mobile|\bphone\b|desktop|in a hurry|isn[’']?t confident|not confident|screen reader|slow|offline|tired|stressed|first time|deciding|signs? up|\basks?\b)/.test(v);
+ const goal=/\b(so (they|she|he) can|needs? to|wants? to|trying to|deciding|to fix|next step|what to do|ways? to|how to)\b/.test(v);
+ const rules=/(plain|simple|short|under \d+|\bwords\b|jargon|accessible|don[’']?t (invent|guess)|say so|numbered|no blame)/.test(v);
+ [['p-who',who],['p-ctx',ctx],['p-goal',goal],['p-rules',rules]].forEach(([id,ok])=>$('#'+id).classList.toggle('ok',ok));
+ $('#p-hint').textContent=!v.trim()?'Name the person first. The AI can’t guess who’s on the other side of the screen.':!who?'Who will read this? Name them.':!ctx?'What’s their situation? On a phone, using a screen reader, in a hurry?':!goal?'What do they need to do next?':!rules?'Set the rules: plain words, a length limit, and “if you don’t know, say so”.':'Strong prompt. Run it next to the lazy one.';
+ pdraft[tk]=mineTa.value;store.set('pdraft',pdraft)}
+$$('#tasks button').forEach(b=>b.onclick=()=>setTask(+b.dataset.i));mineTa.addEventListener('input',pcheck);
+$('#p-example').onclick=()=>{mineTa.value=tasks[tk].ex;pcheck();mineTa.focus()};
+$('#p-copy').onclick=()=>mineTa.value.trim()?copy(mineTa.value.trim(),'Prompt copied'):toast('Write a prompt first');
+$$('#rubric .seg').forEach(g=>$$('button',g).forEach(b=>b.onclick=()=>$$('button',g).forEach(x=>x.setAttribute('aria-pressed',String(x===b)))));
+let sample=null,busy=false;
+const wrapP=p=>`You are a general-purpose AI assistant helping a product team. Respond to the request below as you normally would. Keep the answer under 90 words and return only the answer itself, with no preamble or commentary.\n\nRequest:\n${p}`;
+function fallback(x){$('#tag-'+x).textContent='Written example, not live AI';$('#out-'+x).textContent=tasks[tk][x]}
+async function runOne(x,prompt){const out=$('#out-'+x),tag=$('#tag-'+x);out.textContent='';
+ if(!sample){fallback(x);return}
+ tag.textContent='Asking Claude…';
+ try{const r=await sample(wrapP(prompt),{modelTier:'quick',cache:false,onText:({text})=>{out.textContent=text}});out.textContent=r.text;tag.textContent='Live answer from Claude'}
+ catch(e){if(e&&e.code==='not_granted'){sample=null;$('#ai-off').classList.add('on');fallback(x)}
+  else{tag.textContent=e&&e.code==='rate_limited'?'Too many runs. Wait a minute, then try again.':'Couldn’t reach Claude. Try again.'}}}
+$('#run').onclick=async()=>{if(busy)return;const mine=mineTa.value.trim();if(!mine){toast('Write your prompt first');mineTa.focus();return}
+ busy=true;$('#run').textContent='Running…';$$('#rubric button').forEach(b=>b.setAttribute('aria-pressed','false'));
+ await Promise.all([runOne('a',tasks[tk].lazy),runOne('b',mine)]);busy=false;$('#run').textContent='Run both prompts'};
+setTask(0);
+(async()=>{try{const c=window.claude;sample=c&&c.use?await c.use('sample'):null}catch(e){sample=null}if(!sample)$('#ai-off').classList.add('on')})();
+})();
+</script>
+</body>
+</html>
